@@ -1,39 +1,39 @@
-"""platzigram views"""
+"""Platzigram views."""
 
-#Django
+# Django
 from django.http import HttpResponse
 
-#utilities
+# Utilities
 from datetime import datetime
-import json 
+import json
 
 
 def hello_world(request):
+    """Return a greeting."""
+    return HttpResponse('Oh, hi! Current server time is {now}'.format(
+        now=datetime.now().strftime('%b %dth, %Y - %H:%M hrs')
+    ))
 
-    return HttpResponse('!oh¡ hi, Currente server time is {now}'.format(
-        now=datetime.now().strftime('%b %dth, %Y %H:%M hrs')
-        ))
 
 def sort_integers(request):
-    """return a JOSN response with sorted integers."""
+    """Return a JSON response with sorted integers."""
     numbers = [int(i) for i in request.GET['numbers'].split(',')]
     sorted_ints = sorted(numbers)
-    #import pdb;pdb.set_trace()
-    data ={
+    data = {
         'status': 'ok',
         'numbers': sorted_ints,
-        'message': 'Integers sorted succesfully.'
+        'message': 'Integers sorted successfully.'
     }
     return HttpResponse(
-        json.dumps(data,indent=4),
+        json.dumps(data, indent=4),
         content_type='application/json'
-        )
+    )
 
 
-def say_hi(request,name,age):
-    """return a greeting"""
+def say_hi(request, name, age):
+    """Return a greeting."""
     if age < 12:
-        message = 'Sorry {},you are not allowed here'.format(name)
+        message = 'Sorry {}, you are not allowed here'.format(name)
     else:
-        message = 'Hello, {}! Welcome to platzogram'.format(name)
+        message = 'Hello, {}! Welcome to Platzigram'.format(name)
     return HttpResponse(message)
